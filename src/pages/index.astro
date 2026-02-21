@@ -1,17 +1,800 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════════════════ -->
+  <nav
+    id="main-nav"
+    class="fixed top-0 left-0 right-0 z-50 border-b border-transparent transition-all duration-500"
+    style="padding: 1.5rem 0;"
+  >
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="/" class="flex flex-col leading-none group" aria-label="In Depth Audio Home">
+        <span class="font-display text-xl font-semibold tracking-widest text-gold-400 group-hover:text-gold-300 transition-colors duration-300"
+          style="font-size: 1.15rem; letter-spacing: 0.25em;">IN DEPTH</span>
+        <span class="font-label text-xs tracking-[0.5em] text-ink-300 group-hover:text-ink-200 transition-colors duration-300"
+          style="font-size: 0.6rem; letter-spacing: 0.55em; margin-top: 1px;">AUDIO</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-10">
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#systems"  class="nav-link">Systems</a>
+        <a href="#about"    class="nav-link">About</a>
+        <a href="#consult"  class="btn-gold" style="padding: 0.6rem 1.6rem; font-size: 0.6rem;">
+          <span>Book Consultation</span>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Toggle menu" aria-expanded="false">
+        <span class="block w-6 h-px bg-ink-200 transition-all duration-300 origin-center"></span>
+        <span class="block w-4 h-px bg-gold-500 transition-all duration-300 ml-auto"></span>
+        <span class="block w-6 h-px bg-ink-200 transition-all duration-300 origin-center"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu" class="md:hidden overflow-hidden transition-all duration-500"
+      style="max-height: 0; background: rgba(8,8,8,0.98); backdrop-filter: blur(20px);">
+      <div class="max-w-7xl mx-auto px-6 py-8 flex flex-col gap-6 border-t border-ink-700">
+        <a href="#services" class="nav-link text-base">Services</a>
+        <a href="#systems"  class="nav-link text-base">Systems</a>
+        <a href="#about"    class="nav-link text-base">About</a>
+        <a href="#consult" class="btn-gold self-start mt-2"><span>Book Consultation</span></a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════════════ -->
+  <section class="relative flex items-end overflow-hidden" style="min-height: 100svh;">
+
+    <!-- Background Image -->
+    <div class="hero-bg" id="hero-bg" aria-hidden="true"></div>
+
+    <!-- Gradient Overlays -->
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pb-24 md:pb-32 w-full">
+
+      <!-- Overline -->
+      <p class="section-label hero-animate-1 mb-6" style="color: rgba(201,166,74,0.85);">
+        Custom Home Theater &nbsp;·&nbsp; Audiophile Speaker Systems
+      </p>
+
+      <!-- Main Headline -->
+      <h1 class="font-display hero-animate-2"
+        style="font-size: clamp(3.5rem, 8vw, 8rem); line-height: 1; font-weight: 300; letter-spacing: -0.01em; margin-bottom: 1.5rem; max-width: 14ch;">
+        The Art of <br />
+        <em class="shimmer-text" style="font-style: italic;">Pure Cinema.</em>
+      </h1>
+
+      <!-- Tagline -->
+      <p class="font-body hero-animate-3 text-ink-300"
+        style="font-size: clamp(1rem, 1.5vw, 1.2rem); font-weight: 300; letter-spacing: 0.03em; max-width: 42ch; margin-bottom: 3rem; line-height: 1.75;">
+        Handcrafted home theater systems and audiophile speaker installations
+        for discerning clients in Dover, PA and Scottsdale, AZ.
+      </p>
+
+      <!-- Divider Rule -->
+      <div class="hero-animate-4" style="margin-bottom: 3rem;">
+        <div style="width: 80px; height: 1px; background: linear-gradient(90deg, #c9a64a, transparent);"></div>
+      </div>
+
+      <!-- CTAs -->
+      <div class="hero-animate-5 flex flex-wrap gap-5 items-center">
+        <a href="#consult" class="btn-gold">
+          <span>Schedule Your Consultation</span>
+        </a>
+        <a href="#systems" class="btn-outline">
+          View Systems
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 right-12 hidden lg:flex flex-col items-center gap-3 hero-animate-5">
+      <span class="section-label" style="writing-mode: vertical-rl; letter-spacing: 0.3em; font-size: 0.55rem; color: #7a7068;">SCROLL</span>
+      <div style="width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(201,166,74,0.6), transparent);"></div>
+    </div>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       MANIFESTO STRIP
+  ═══════════════════════════════════════════════════════ -->
+  <div style="background: #c9a64a; padding: 1.1rem 0; overflow: hidden;">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="font-label text-ink-950" style="font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; font-weight: 600;">
+        Dover, Pennsylvania &nbsp;·&nbsp; Scottsdale, Arizona
+      </p>
+      <p class="font-display text-ink-900" style="font-size: 1rem; font-style: italic; font-weight: 400; letter-spacing: 0.05em; text-align: center;">
+        "Where acoustics become architecture."
+      </p>
+      <p class="font-label text-ink-950" style="font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; font-weight: 600;">
+        By Appointment Only
+      </p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       ABOUT / INTRO
+  ═══════════════════════════════════════════════════════ -->
+  <section id="about" class="py-32 md:py-40" style="background: #080808;">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+      <div class="grid lg:grid-cols-2 gap-20 lg:gap-32 items-center">
+
+        <!-- Left: Text -->
+        <div>
+          <p class="section-label fade-up mb-6">Our Story</p>
+          <div class="gold-rule fade-up mb-10"></div>
+
+          <h2 class="font-display fade-up"
+            style="font-size: clamp(2.5rem, 4vw, 4.5rem); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 2.5rem;">
+            Where Architecture <br />
+            <span class="text-gold-gradient" style="font-style: italic;">Meets Acoustics.</span>
+          </h2>
+
+          <!-- DAVE'S BIO GOES HERE -->
+          <div class="fade-up fade-up-delay-1" style="color: #a8a09a; font-weight: 300; line-height: 1.9;">
+            <p style="margin-bottom: 1.5rem;">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+            <p style="margin-bottom: 1.5rem;">
+              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+              fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+              qui officia deserunt mollit anim id est laborum. Ut enim ad minima veniam, quis
+              nostrum exercitationem ullam corporis suscipit laboriosam.
+            </p>
+            <p>
+              Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed
+              quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+            </p>
+          </div>
+
+          <div class="fade-up fade-up-delay-2 mt-12">
+            <p class="font-display" style="font-size: 1.35rem; font-style: italic; color: #c9a64a; font-weight: 400; margin-bottom: 0.35rem;">
+              David Barkby
+            </p>
+            <p class="font-label" style="font-size: 0.6rem; letter-spacing: 0.3em; color: #4a4540; text-transform: uppercase;">
+              Founder &amp; Lead Designer, In Depth Audio
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: Image -->
+        <div class="fade-in" style="position: relative;">
+          <div style="position: relative; overflow: hidden;">
+            <img
+              src="/images/showroom-detail.png"
+              alt="In Depth Audio showroom — custom home theater craftsmanship"
+              style="width: 100%; display: block; object-fit: cover; aspect-ratio: 4/5; filter: brightness(0.9) saturate(0.85);"
+            />
+            <!-- Gold frame accent -->
+            <div style="position: absolute; inset: 0; border: 1px solid rgba(201,166,74,0.15); pointer-events: none;"></div>
+            <div style="position: absolute; top: 16px; left: 16px; right: 16px; bottom: 16px; border: 1px solid rgba(201,166,74,0.08); pointer-events: none;"></div>
+          </div>
+
+          <!-- Floating badge -->
+          <div style="
+            position: absolute;
+            bottom: -24px;
+            right: -24px;
+            background: #c9a64a;
+            color: #080808;
+            padding: 2rem;
+            text-align: center;
+            min-width: 120px;
+          ">
+            <p class="font-display" style="font-size: 2.5rem; font-weight: 600; line-height: 1;">20+</p>
+            <p class="font-label" style="font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 600; margin-top: 0.25rem;">Years of Craft</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       SERVICES
+  ═══════════════════════════════════════════════════════ -->
+  <section id="services" style="background: #080808; padding: 8rem 0;">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+      <!-- Header -->
+      <div class="text-center mb-20">
+        <p class="section-label fade-up mb-5">What We Do</p>
+        <div style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
+          <div class="gold-rule fade-up"></div>
+        </div>
+        <h2 class="font-display fade-up"
+          style="font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; max-width: 18ch; margin: 0 auto 1.5rem;">
+          Crafted for <span class="text-gold-gradient" style="font-style: italic;">Perfection</span>
+        </h2>
+        <p class="fade-up font-body text-ink-400"
+          style="max-width: 44ch; margin: 0 auto; line-height: 1.8; font-weight: 300; font-size: 1rem;">
+          Every system we design is purpose-built for the space, the listener, and the experience
+          you deserve.
+        </p>
+      </div>
+
+      <!-- Service Grid -->
+      <div class="grid md:grid-cols-2 gap-px" style="background: #1c1612;">
+
+        <!-- Service 1: Custom Home Theater Design -->
+        <div class="service-card fade-up">
+          <div style="margin-bottom: 2rem;">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <rect x="1" y="8" width="30" height="19" rx="1" stroke="#c9a64a" stroke-width="1"/>
+              <path d="M8 27v3M24 27v3M5 30h22" stroke="#c9a64a" stroke-width="1" stroke-linecap="round"/>
+              <rect x="5" y="12" width="22" height="11" rx="0.5" fill="rgba(201,166,74,0.08)"/>
+              <circle cx="16" cy="17.5" r="3" stroke="#c9a64a" stroke-width="0.75"/>
+            </svg>
+          </div>
+          <h3 class="font-display" style="font-size: 1.75rem; font-weight: 400; margin-bottom: 1rem; letter-spacing: -0.01em; line-height: 1.2;">
+            Custom Home Theater <br /><span style="font-style: italic; color: #c9a64a;">Design</span>
+          </h3>
+          <div style="width: 40px; height: 1px; background: rgba(201,166,74,0.4); margin-bottom: 1.25rem;"></div>
+          <p class="font-body text-ink-400" style="font-weight: 300; line-height: 1.8; font-size: 0.95rem;">
+            From the initial room assessment through final calibration, we engineer every detail
+            of your private cinema — screen geometry, sight lines, lighting, acoustics, and
+            seating — into a seamless, breathtaking whole.
+          </p>
+        </div>
+
+        <!-- Service 2: Audiophile Speaker Systems -->
+        <div class="service-card fade-up fade-up-delay-1">
+          <div style="margin-bottom: 2rem;">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <ellipse cx="16" cy="16" rx="14" ry="14" stroke="#c9a64a" stroke-width="1"/>
+              <ellipse cx="16" cy="16" rx="8" ry="8" stroke="#c9a64a" stroke-width="0.75" stroke-dasharray="2 2"/>
+              <circle cx="16" cy="16" r="2.5" fill="#c9a64a"/>
+              <path d="M16 2v3M16 27v3M2 16h3M27 16h3" stroke="#c9a64a" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="font-display" style="font-size: 1.75rem; font-weight: 400; margin-bottom: 1rem; letter-spacing: -0.01em; line-height: 1.2;">
+            Audiophile Speaker <br /><span style="font-style: italic; color: #c9a64a;">Systems</span>
+          </h3>
+          <div style="width: 40px; height: 1px; background: rgba(201,166,74,0.4); margin-bottom: 1.25rem;"></div>
+          <p class="font-body text-ink-400" style="font-weight: 300; line-height: 1.8; font-size: 0.95rem;">
+            We source and configure the world's finest loudspeakers — from floor-standing
+            reference monitors to bespoke built-ins — matched precisely to your room, your
+            amplification, and your listening preferences.
+          </p>
+        </div>
+
+        <!-- Service 3: Room Acoustic Treatment -->
+        <div class="service-card fade-up fade-up-delay-2">
+          <div style="margin-bottom: 2rem;">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <rect x="2" y="6" width="28" height="20" rx="1" stroke="#c9a64a" stroke-width="1"/>
+              <path d="M6 10v12M10 8v16M14 11v10M18 9v14M22 10v12M26 8v16" stroke="#c9a64a" stroke-width="0.75" stroke-linecap="round"/>
+              <path d="M2 16h28" stroke="#c9a64a" stroke-width="0.5" stroke-dasharray="1 3"/>
+            </svg>
+          </div>
+          <h3 class="font-display" style="font-size: 1.75rem; font-weight: 400; margin-bottom: 1rem; letter-spacing: -0.01em; line-height: 1.2;">
+            Room Acoustic <br /><span style="font-style: italic; color: #c9a64a;">Treatment</span>
+          </h3>
+          <div style="width: 40px; height: 1px; background: rgba(201,166,74,0.4); margin-bottom: 1.25rem;"></div>
+          <p class="font-body text-ink-400" style="font-weight: 300; line-height: 1.8; font-size: 0.95rem;">
+            Great equipment demands a great room. Our acoustic treatment designs are both
+            scientifically precise and architecturally beautiful — bass trapping, diffusion,
+            and absorption that enhances rather than diminishes your space.
+          </p>
+        </div>
+
+        <!-- Service 4: AV Equipment & Installation -->
+        <div class="service-card fade-up fade-up-delay-3">
+          <div style="margin-bottom: 2rem;">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <rect x="2" y="4" width="28" height="7" rx="1" stroke="#c9a64a" stroke-width="1"/>
+              <rect x="2" y="13" width="28" height="7" rx="1" stroke="#c9a64a" stroke-width="1"/>
+              <rect x="2" y="22" width="28" height="7" rx="1" stroke="#c9a64a" stroke-width="1"/>
+              <circle cx="7" cy="7.5" r="1.5" fill="#c9a64a"/>
+              <circle cx="7" cy="16.5" r="1.5" fill="rgba(201,166,74,0.4)"/>
+              <circle cx="7" cy="25.5" r="1.5" fill="rgba(201,166,74,0.2)"/>
+              <path d="M14 7.5h12M14 16.5h8M14 25.5h10" stroke="#c9a64a" stroke-width="0.75" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="font-display" style="font-size: 1.75rem; font-weight: 400; margin-bottom: 1rem; letter-spacing: -0.01em; line-height: 1.2;">
+            AV Equipment <br /><span style="font-style: italic; color: #c9a64a;">&amp; Installation</span>
+          </h3>
+          <div style="width: 40px; height: 1px; background: rgba(201,166,74,0.4); margin-bottom: 1.25rem;"></div>
+          <p class="font-body text-ink-400" style="font-weight: 300; line-height: 1.8; font-size: 0.95rem;">
+            Reference-grade projectors, 8K displays, Dolby Atmos processors, and whole-home
+            automation — sourced, integrated, and calibrated by certified specialists with
+            meticulous attention to signal path and power.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       EXPERIENCE INTERLUDE (full-bleed image + quote)
+  ═══════════════════════════════════════════════════════ -->
+  <div style="position: relative; height: 60vh; overflow: hidden; min-height: 420px;">
+    <img
+      src="/images/theater-experience.png"
+      alt="Immersive home theater experience"
+      style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.38) saturate(0.7);"
+    />
+    <div style="
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(8,8,8,0.75) 0%, rgba(8,8,8,0.1) 65%);
+      display: flex; align-items: center;
+    ">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12 w-full">
+        <blockquote class="fade-in">
+          <p class="font-display text-ink-100"
+            style="font-size: clamp(1.8rem, 3.5vw, 3.5rem); font-style: italic; font-weight: 300; line-height: 1.25; max-width: 20ch; margin-bottom: 2rem;">
+            "Sound is not just heard — it is <span class="text-gold-gradient">felt, lived,</span> and remembered."
+          </p>
+          <cite class="font-label text-ink-400 not-italic" style="font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;">
+            — David Barkby, Founder
+          </cite>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       FEATURED SYSTEMS
+  ═══════════════════════════════════════════════════════ -->
+  <section id="systems" style="background: #080808; padding: 8rem 0;">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+      <!-- Header -->
+      <div class="mb-20">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+          <div>
+            <p class="section-label fade-up mb-5">Signature Collections</p>
+            <div class="gold-rule fade-up mb-6"></div>
+            <h2 class="font-display fade-up"
+              style="font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em;">
+              Extraordinary <br />
+              <span class="text-gold-gradient" style="font-style: italic;">Systems</span>
+            </h2>
+          </div>
+          <p class="fade-up font-body text-ink-400 md:text-right"
+            style="font-weight: 300; line-height: 1.8; font-size: 0.95rem; max-width: 30ch;">
+            Each system is unique. Each installation is a collaboration between client
+            vision and acoustic science.
+          </p>
+        </div>
+      </div>
+
+      <!-- Systems Grid -->
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <!-- System 1: The Sovereign Reference -->
+        <article class="system-card fade-up">
+          <div style="overflow: hidden; position: relative;">
+            <img
+              src="/images/speakers-main.png"
+              alt="Audiophile reference speaker system"
+              class="system-card-img"
+            />
+            <div class="system-card-overlay"></div>
+            <div style="
+              position: absolute; top: 1.25rem; left: 1.25rem;
+              background: rgba(8,8,8,0.75); backdrop-filter: blur(10px);
+              border: 1px solid rgba(201,166,74,0.3);
+              padding: 0.4rem 0.9rem;
+            ">
+              <span class="font-label" style="font-size: 0.55rem; letter-spacing: 0.3em; color: #c9a64a; text-transform: uppercase; font-weight: 600;">
+                Audiophile
+              </span>
+            </div>
+          </div>
+          <div style="padding: 2rem;">
+            <h3 class="font-display" style="font-size: 1.5rem; font-weight: 400; margin-bottom: 0.75rem; line-height: 1.2;">
+              The Sovereign <span style="font-style: italic; color: #c9a64a;">Reference</span>
+            </h3>
+            <p class="font-body text-ink-400" style="font-size: 0.9rem; line-height: 1.8; margin-bottom: 1.75rem; font-weight: 300;">
+              A dual-monaural reference system anchored by world-class floor-standing speakers,
+              valve amplification, and precision room treatment. Pure, uncompromising fidelity.
+            </p>
+            <div style="height: 1px; background: #1c1612; margin-bottom: 1.75rem;"></div>
+            <a href="#consult" class="nav-link inline-flex items-center gap-3" style="font-size: 0.65rem;">
+              Enquire About This System
+              <svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
+                <path d="M1 5h14M10 1l5 4-5 4" stroke="#c9a64a" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- System 2: The Meridian Suite -->
+        <article class="system-card fade-up fade-up-delay-1">
+          <div style="overflow: hidden; position: relative;">
+            <img
+              src="/images/av-control.png"
+              alt="Premium AV control and equipment installation"
+              class="system-card-img"
+            />
+            <div class="system-card-overlay"></div>
+            <div style="
+              position: absolute; top: 1.25rem; left: 1.25rem;
+              background: rgba(8,8,8,0.75); backdrop-filter: blur(10px);
+              border: 1px solid rgba(201,166,74,0.3);
+              padding: 0.4rem 0.9rem;
+            ">
+              <span class="font-label" style="font-size: 0.55rem; letter-spacing: 0.3em; color: #c9a64a; text-transform: uppercase; font-weight: 600;">
+                Signature AV
+              </span>
+            </div>
+          </div>
+          <div style="padding: 2rem;">
+            <h3 class="font-display" style="font-size: 1.5rem; font-weight: 400; margin-bottom: 0.75rem; line-height: 1.2;">
+              The Meridian <span style="font-style: italic; color: #c9a64a;">Suite</span>
+            </h3>
+            <p class="font-body text-ink-400" style="font-size: 0.9rem; line-height: 1.8; margin-bottom: 1.75rem; font-weight: 300;">
+              A fully integrated Dolby Atmos home theater with reference-class projection,
+              motorized masking screen, and invisible whole-home AV routing — controlled
+              from a single touch.
+            </p>
+            <div style="height: 1px; background: #1c1612; margin-bottom: 1.75rem;"></div>
+            <a href="#consult" class="nav-link inline-flex items-center gap-3" style="font-size: 0.65rem;">
+              Enquire About This System
+              <svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
+                <path d="M1 5h14M10 1l5 4-5 4" stroke="#c9a64a" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- System 3: The Atelier Edition -->
+        <article class="system-card fade-up fade-up-delay-2">
+          <div style="overflow: hidden; position: relative;">
+            <img
+              src="/images/acoustic-wall.png"
+              alt="Bespoke acoustic treatment and wall design"
+              class="system-card-img"
+            />
+            <div class="system-card-overlay"></div>
+            <div style="
+              position: absolute; top: 1.25rem; left: 1.25rem;
+              background: rgba(8,8,8,0.75); backdrop-filter: blur(10px);
+              border: 1px solid rgba(201,166,74,0.3);
+              padding: 0.4rem 0.9rem;
+            ">
+              <span class="font-label" style="font-size: 0.55rem; letter-spacing: 0.3em; color: #c9a64a; text-transform: uppercase; font-weight: 600;">
+                Bespoke
+              </span>
+            </div>
+          </div>
+          <div style="padding: 2rem;">
+            <h3 class="font-display" style="font-size: 1.5rem; font-weight: 400; margin-bottom: 0.75rem; line-height: 1.2;">
+              The Atelier <span style="font-style: italic; color: #c9a64a;">Edition</span>
+            </h3>
+            <p class="font-body text-ink-400" style="font-size: 0.9rem; line-height: 1.8; margin-bottom: 1.75rem; font-weight: 300;">
+              Fully bespoke acoustic architecture — custom-fabricated wall panels, bespoke
+              diffusion geometry, and integrated lighting design that transforms listening
+              rooms into singular works of art.
+            </p>
+            <div style="height: 1px; background: #1c1612; margin-bottom: 1.75rem;"></div>
+            <a href="#consult" class="nav-link inline-flex items-center gap-3" style="font-size: 0.65rem;">
+              Enquire About This System
+              <svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
+                <path d="M1 5h14M10 1l5 4-5 4" stroke="#c9a64a" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- CTA row -->
+      <div class="text-center mt-20 fade-up">
+        <p class="font-display text-ink-400 mb-8" style="font-size: 1.25rem; font-style: italic; font-weight: 300;">
+          Every engagement begins with a private conversation.
+        </p>
+        <a href="#consult" class="btn-gold">
+          <span>Begin Your Project</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       CONSULTATION FORM
+  ═══════════════════════════════════════════════════════ -->
+  <section id="consult" style="background: #080808; padding: 8rem 0; position: relative; overflow: hidden;">
+
+    <!-- Ambient radial glow -->
+    <div style="
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(201,166,74,0.045) 0%, transparent 65%);
+      pointer-events: none;
+    " aria-hidden="true"></div>
+
+    <div class="max-w-4xl mx-auto px-6 lg:px-12 relative z-10">
+
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <p class="section-label fade-up mb-5">Begin Your Journey</p>
+        <div style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
+          <div class="gold-rule fade-up"></div>
+        </div>
+        <h2 class="font-display fade-up"
+          style="font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 1.5rem;">
+          Schedule Your <br />
+          <span class="text-gold-gradient" style="font-style: italic;">Private Consultation</span>
+        </h2>
+        <p class="fade-up font-body text-ink-400"
+          style="font-weight: 300; line-height: 1.8; font-size: 1rem; max-width: 42ch; margin: 0 auto;">
+          Tell us about your vision. Every project begins with a confidential, no-obligation
+          conversation with David Barkby personally.
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form
+        action="mailto:info@indepthaudio.com"
+        method="post"
+        enctype="text/plain"
+        class="fade-up"
+        style="background: #0e0e0e; border: 1px solid #1c1612; padding: 3.5rem;"
+      >
+        <!-- Name + Email -->
+        <div class="grid md:grid-cols-2 gap-10 mb-10">
+
+          <div class="form-field">
+            <label class="section-label block mb-3" for="name" style="font-size: 0.6rem;">Full Name</label>
+            <input
+              type="text" id="name" name="name"
+              placeholder="Your full name" required
+              class="form-input"
+            />
+            <div class="form-line"></div>
+          </div>
+
+          <div class="form-field">
+            <label class="section-label block mb-3" for="email" style="font-size: 0.6rem;">Email Address</label>
+            <input
+              type="email" id="email" name="email"
+              placeholder="your@email.com" required
+              class="form-input"
+            />
+            <div class="form-line"></div>
+          </div>
+
+        </div>
+
+        <!-- Phone + City -->
+        <div class="grid md:grid-cols-2 gap-10 mb-10">
+
+          <div class="form-field">
+            <label class="section-label block mb-3" for="phone" style="font-size: 0.6rem;">Phone Number</label>
+            <input
+              type="tel" id="phone" name="phone"
+              placeholder="(000) 000-0000"
+              class="form-input"
+            />
+            <div class="form-line"></div>
+          </div>
+
+          <div class="form-field">
+            <label class="section-label block mb-3" for="city" style="font-size: 0.6rem;">City / State</label>
+            <input
+              type="text" id="city" name="city"
+              placeholder="Dover, PA  ·  Scottsdale, AZ  ·  Other"
+              class="form-input"
+            />
+            <div class="form-line"></div>
+          </div>
+
+        </div>
+
+        <!-- Project Description -->
+        <div class="form-field mb-14">
+          <label class="section-label block mb-3" for="project" style="font-size: 0.6rem;">Brief Project Description</label>
+          <textarea
+            id="project" name="project"
+            placeholder="Tell us about your space, your goals, and what you envision for your listening experience…"
+            class="form-input"
+            style="height: 130px;"
+          ></textarea>
+          <div class="form-line"></div>
+        </div>
+
+        <!-- Submit row -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <p class="font-body text-ink-500" style="font-size: 0.8rem; font-weight: 300; max-width: 28ch; line-height: 1.6;">
+            Your inquiry is private. We respond within 24 hours.
+          </p>
+          <button type="submit" class="btn-gold">
+            <span>Send My Enquiry</span>
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════ -->
+  <footer style="background: #040404; border-top: 1px solid #1c1612; padding: 5rem 0 3rem;">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+      <!-- Top section -->
+      <div class="grid md:grid-cols-3 gap-16 mb-16">
+
+        <!-- Brand column -->
+        <div>
+          <div class="mb-6">
+            <p class="font-display" style="font-size: 1.5rem; font-weight: 400; letter-spacing: 0.2em; color: #c9a64a; line-height: 1;">
+              IN DEPTH
+            </p>
+            <p class="font-label" style="font-size: 0.55rem; letter-spacing: 0.55em; color: #4a4540; text-transform: uppercase; margin-top: 3px;">
+              AUDIO
+            </p>
+          </div>
+          <div style="width: 40px; height: 1px; background: rgba(201,166,74,0.3); margin-bottom: 1.5rem;"></div>
+          <p class="font-body text-ink-500" style="font-size: 0.85rem; font-weight: 300; line-height: 1.9; max-width: 22ch;">
+            Custom home theater and audiophile speaker systems. By appointment only.
+          </p>
+        </div>
+
+        <!-- Locations -->
+        <div class="grid grid-cols-2 gap-10">
+          <div>
+            <p class="section-label mb-5" style="font-size: 0.55rem;">Dover, PA</p>
+            <address class="font-body text-ink-500 not-italic" style="font-size: 0.85rem; font-weight: 300; line-height: 2;">
+              Dover<br />
+              Pennsylvania 17315
+            </address>
+          </div>
+          <div>
+            <p class="section-label mb-5" style="font-size: 0.55rem;">Scottsdale, AZ</p>
+            <address class="font-body text-ink-500 not-italic" style="font-size: 0.85rem; font-weight: 300; line-height: 2;">
+              Scottsdale<br />
+              Arizona 85251
+            </address>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <p class="section-label mb-5" style="font-size: 0.55rem;">Contact</p>
+          <div class="flex flex-col gap-5">
+            <a
+              href="tel:+17178705413"
+              class="font-body text-ink-400 hover:text-gold-400 transition-colors duration-300"
+              style="font-size: 1.1rem; font-weight: 300; letter-spacing: 0.03em; text-decoration: none;"
+            >
+              (717) 870-5413
+            </a>
+            <a
+              href="mailto:info@indepthaudio.com"
+              class="font-body text-ink-500 hover:text-gold-400 transition-colors duration-300"
+              style="font-size: 0.85rem; font-weight: 300; text-decoration: none;"
+            >
+              info@indepthaudio.com
+            </a>
+            <a href="#consult" class="btn-outline self-start mt-1" style="padding: 0.7rem 1.5rem; font-size: 0.6rem;">
+              Book Consultation
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Gold divider -->
+      <div class="gold-rule-full mb-8"></div>
+
+      <!-- Bottom: Copyright -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="font-label text-ink-600" style="font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;">
+          &copy; 2026 In Depth Audio. All rights reserved.
+        </p>
+        <p class="font-label text-ink-600" style="font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;">
+          Dover, PA &nbsp;·&nbsp; Scottsdale, AZ
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       JAVASCRIPT: Nav · Mobile Menu · Parallax · Scroll Anim
+  ═══════════════════════════════════════════════════════ -->
+  <script>
+    // ── Nav scroll behavior ──────────────────────────────────
+    const nav = document.getElementById('main-nav') as HTMLElement | null;
+
+    window.addEventListener('scroll', () => {
+      if (!nav) return;
+      if (window.scrollY > 60) {
+        nav.classList.add('nav-scrolled');
+        nav.style.padding = '1rem 0';
+      } else {
+        nav.classList.remove('nav-scrolled');
+        nav.style.padding = '1.5rem 0';
+      }
+    }, { passive: true });
+
+    // ── Mobile menu toggle ───────────────────────────────────
+    const mobileBtn  = document.getElementById('mobile-menu-btn') as HTMLButtonElement | null;
+    const mobileMenu = document.getElementById('mobile-menu') as HTMLElement | null;
+    let menuOpen = false;
+
+    mobileBtn?.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      if (mobileMenu) {
+        mobileMenu.style.maxHeight = menuOpen ? '400px' : '0';
+      }
+      mobileBtn.setAttribute('aria-expanded', String(menuOpen));
+    });
+
+    mobileMenu?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuOpen = false;
+        if (mobileMenu) mobileMenu.style.maxHeight = '0';
+        mobileBtn?.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // ── Hero background parallax ─────────────────────────────
+    const heroBg = document.getElementById('hero-bg') as HTMLElement | null;
+
+    // Trigger loaded class for scale-in on page load
+    requestAnimationFrame(() => {
+      heroBg?.classList.add('loaded');
+    });
+
+    window.addEventListener('scroll', () => {
+      if (!heroBg) return;
+      const scrolled = window.scrollY;
+      const heroHeight = heroBg.parentElement?.offsetHeight ?? window.innerHeight;
+      if (scrolled < heroHeight) {
+        heroBg.style.transform = `scale(1) translateY(${scrolled * 0.25}px)`;
+      }
+    }, { passive: true });
+
+    // ── Intersection Observer: scroll-triggered animations ───
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+    );
+
+    document.querySelectorAll('.fade-up, .fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</Layout>
