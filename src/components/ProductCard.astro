@@ -1,0 +1,98 @@
+---
+/**
+ * ProductCard – used on the /products listing page.
+ * Matches the system-card styling from the existing homepage.
+ */
+import type { Product } from "../data/products";
+import { formatPrice } from "../data/products";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+const heroSrc = `/images/products/${product.slug}/${product.heroImage}`;
+---
+
+<a href={`/products/${product.slug}`} class="product-card group block" data-slug={product.slug}>
+  <!-- Image -->
+  <div class="relative overflow-hidden bg-ink-900">
+    <img
+      src={heroSrc}
+      alt={product.name}
+      class="product-card-img w-full aspect-[3/4] object-cover object-center block transition-transform duration-700 ease-out group-hover:scale-[1.04] brightness-[0.85] saturate-[0.9] group-hover:brightness-[0.95] group-hover:saturate-100"
+      loading="lazy"
+      decoding="async"
+    />
+
+    <!-- Gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[rgba(8,8,8,0.85)] via-transparent to-transparent pointer-events-none"></div>
+
+    <!-- Badges -->
+    <div class="absolute top-4 left-4 flex flex-col gap-2">
+      {product.instantShip && (
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 text-[0.6rem] font-semibold tracking-[0.2em] uppercase font-label bg-[rgba(201,166,74,0.15)] text-gold-400 border border-gold-500/30 backdrop-blur-sm">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          Instant Ship
+        </span>
+      )}
+      {product.discontinued && product.badge && (
+        <span class="inline-flex items-center px-3 py-1 text-[0.6rem] font-semibold tracking-[0.2em] uppercase font-label bg-[rgba(220,38,38,0.12)] text-red-400 border border-red-500/25 backdrop-blur-sm">
+          {product.badge}
+        </span>
+      )}
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="p-6 bg-[#111111] border-x border-b border-[#2a2520] group-hover:border-[#c9a64a30] transition-colors duration-400">
+    <!-- Category -->
+    <span class="section-label text-[0.6rem] tracking-[0.3em]">{product.category}</span>
+
+    <!-- Name -->
+    <h3 class="font-display text-2xl text-ink-100 mt-2 mb-3 group-hover:text-gold-400 transition-colors duration-300">
+      {product.name}
+    </h3>
+
+    <!-- Description -->
+    <p class="text-ink-300 text-sm leading-relaxed mb-5 line-clamp-2">
+      {product.cardDescription}
+    </p>
+
+    <!-- Price & CTA row -->
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <p class="text-[0.65rem] font-label font-medium tracking-[0.15em] uppercase text-ink-400 mb-0.5">
+          From
+        </p>
+        <p class="text-gold-400 font-display text-xl">
+          {formatPrice(product.priceFrom)}<span class="text-ink-400 text-sm font-body"> / pair</span>
+        </p>
+      </div>
+      <span class="text-[0.65rem] font-label font-semibold tracking-[0.2em] uppercase text-ink-400 group-hover:text-gold-400 transition-colors duration-300 flex items-center gap-2">
+        View Details
+        <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </span>
+    </div>
+  </div>
+
+  <!-- Bottom gold line (matches service-card pattern) -->
+  <div class="h-px w-0 group-hover:w-full bg-gradient-to-r from-gold-500 to-transparent transition-all duration-500"></div>
+</a>
+
+<style>
+  .product-card {
+    display: block;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.6),
+      0 0 0 1px rgba(201, 166, 74, 0.15);
+  }
+</style>

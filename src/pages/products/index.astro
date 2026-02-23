@@ -1,0 +1,165 @@
+---
+/**
+ * /products – Speaker inventory listing page.
+ */
+import Layout from "../../layouts/Layout.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import { getProductsSorted, SHIPPING_NOTE, CUSTOM_ORDER_LEAD, PHONE_NUMBER, PHONE_HREF } from "../../data/products";
+
+const products = getProductsSorted();
+---
+
+<Layout title="Speakers | In Depth Audio" description="Explore our curated collection of Legacy Audio speakers — available for instant shipment from our Arizona showroom or custom-ordered in your choice of finish.">
+
+  <!-- ─── NAV (duplicated from index for now — will extract to component later) ─── -->
+  <nav id="nav" class="fixed top-0 w-full z-50 transition-all duration-500 bg-transparent border-b border-transparent">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
+      <a href="/" class="font-display text-xl text-ink-100 tracking-wide hover:text-gold-400 transition-colors">
+        In Depth Audio
+      </a>
+      <div class="hidden md:flex items-center gap-10">
+        <a href="/#services" class="nav-link">Services</a>
+        <a href="/products" class="nav-link text-gold-400">Speakers</a>
+        <a href="/#about" class="nav-link">About</a>
+        <a href="/#contact" class="nav-link">Book Consultation</a>
+      </div>
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden text-ink-300 hover:text-gold-400 transition-colors" aria-label="Menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div id="mobile-drawer" class="md:hidden hidden bg-[#080808ee] backdrop-blur-xl border-t border-[#2a2520]">
+      <div class="px-6 py-8 flex flex-col gap-6">
+        <a href="/#services" class="nav-link text-base">Services</a>
+        <a href="/products" class="nav-link text-base text-gold-400">Speakers</a>
+        <a href="/#about" class="nav-link text-base">About</a>
+        <a href="/#contact" class="nav-link text-base">Book Consultation</a>
+        <div class="gold-rule mt-2"></div>
+        <a href={PHONE_HREF} class="text-ink-300 text-sm font-label tracking-wider">{PHONE_NUMBER}</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── HERO SECTION ──────────────────────────────────────────── -->
+  <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28">
+    <!-- Subtle radial glow -->
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at center top, rgba(201,166,74,0.04) 0%, transparent 60%);"></div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 relative">
+      <div class="max-w-3xl">
+        <span class="section-label fade-up">Legacy Audio Collection</span>
+        <div class="gold-rule mt-4 mb-8 fade-up fade-up-delay-1"></div>
+        <h1 class="font-display text-4xl md:text-5xl lg:text-6xl text-ink-100 leading-[1.15] fade-up fade-up-delay-2">
+          Speakers That Define<br/>
+          <span class="text-gold-gradient">the Experience</span>
+        </h1>
+        <p class="text-ink-300 text-lg mt-6 max-w-2xl leading-relaxed fade-up fade-up-delay-3">
+          Every speaker in our collection is hand-selected from Legacy Audio's finest offerings. Each pair is available for immediate shipment from our Arizona showroom, or custom-ordered in your choice of over a dozen artisan finishes.
+        </p>
+
+        <!-- Quick info pills -->
+        <div class="flex flex-wrap gap-4 mt-8 fade-up fade-up-delay-4">
+          <span class="inline-flex items-center gap-2 px-4 py-2 text-[0.65rem] font-label font-medium tracking-[0.2em] uppercase text-ink-300 border border-[#2a2520] bg-[#111111]">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            {SHIPPING_NOTE}
+          </span>
+          <span class="inline-flex items-center gap-2 px-4 py-2 text-[0.65rem] font-label font-medium tracking-[0.2em] uppercase text-ink-300 border border-[#2a2520] bg-[#111111]">
+            {CUSTOM_ORDER_LEAD}
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── DIVIDER ───────────────────────────────────────────────── -->
+  <div class="gold-rule-full max-w-7xl mx-auto"></div>
+
+  <!-- ─── PRODUCT GRID ──────────────────────────────────────────── -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        {products.map((product, i) => (
+          <div class={`fade-up fade-up-delay-${Math.min(i + 1, 4)}`}>
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONSULTATION CTA ──────────────────────────────────────── -->
+  <section class="py-20 lg:py-28 border-t border-[#2a2520]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 text-center">
+      <span class="section-label fade-up">Not Sure Where to Start?</span>
+      <div class="gold-rule mx-auto mt-4 mb-8 fade-up fade-up-delay-1"></div>
+      <h2 class="font-display text-3xl md:text-4xl text-ink-100 fade-up fade-up-delay-2">
+        Let's Build Your System Together
+      </h2>
+      <p class="text-ink-300 mt-4 max-w-xl mx-auto leading-relaxed fade-up fade-up-delay-3">
+        Whether you're designing a dedicated listening room, upgrading your home theater, or simply curious about what Legacy Audio can do — Dave is here to help.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 fade-up fade-up-delay-4">
+        <a href="/#contact" class="btn-gold"><span>Book a Consultation</span></a>
+        <a href={PHONE_HREF} class="btn-outline">Call {PHONE_NUMBER}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ────────────────────────────────────────────────── -->
+  <footer class="border-t border-[#2a2520] py-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <span class="font-display text-lg text-ink-100">In Depth Audio</span>
+        <span class="text-ink-500 text-sm">·</span>
+        <span class="text-ink-400 text-xs font-label tracking-wider uppercase">Scottsdale, AZ</span>
+      </div>
+      <div class="flex items-center gap-8">
+        <a href="/" class="nav-link text-[0.6rem]">Home</a>
+        <a href="/products" class="nav-link text-[0.6rem] text-gold-400">Speakers</a>
+        <a href="/#contact" class="nav-link text-[0.6rem]">Contact</a>
+      </div>
+      <p class="text-ink-500 text-xs">&copy; {new Date().getFullYear()} In Depth Audio. All rights reserved.</p>
+    </div>
+  </footer>
+
+</Layout>
+
+<script>
+  // ─── Nav scroll behavior ─────────────────────────────────────────
+  const nav = document.getElementById("nav");
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 40) {
+      nav?.classList.add("nav-scrolled");
+    } else {
+      nav?.classList.remove("nav-scrolled");
+    }
+  });
+  // Trigger immediately
+  if (window.scrollY > 40) nav?.classList.add("nav-scrolled");
+
+  // ─── Mobile menu ─────────────────────────────────────────────────
+  const menuBtn = document.getElementById("mobile-menu-btn");
+  const drawer = document.getElementById("mobile-drawer");
+  menuBtn?.addEventListener("click", () => {
+    drawer?.classList.toggle("hidden");
+  });
+
+  // ─── Scroll animations ──────────────────────────────────────────
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("visible");
+          observer.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+  );
+
+  document.querySelectorAll(".fade-up, .fade-in").forEach((el) => observer.observe(el));
+</script>
