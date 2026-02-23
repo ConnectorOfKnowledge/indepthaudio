@@ -10,7 +10,6 @@ import {
   formatPrice,
   formatPriceRange,
   finishSlug,
-  swatchPath,
   FINISH_PHOTO_MAP,
   SHIPPING_NOTE,
   CUSTOM_ORDER_LEAD,
@@ -175,49 +174,41 @@ const related = products.filter((p) => p.slug !== product.slug).sort((a, b) => a
             </p>
           </div>
 
-          <!-- Finish swatches -->
+          <!-- Finish selector -->
           <div class="mb-8" id="finish-selector" data-speaker={product.slug}>
-            <p class="text-[0.65rem] font-label font-semibold tracking-[0.2em] uppercase text-ink-300 mb-1">
+            <p class="text-[0.65rem] font-label font-semibold tracking-[0.2em] uppercase text-ink-300 mb-3">
               Available Finishes
             </p>
-            <p id="active-finish-name" class="text-ink-200 text-sm mb-4 h-5">&nbsp;</p>
 
             {(["standard", "premium", "exotic"] as const).map((tier) => (
               finishesByTier(tier).length > 0 && (
-                <div class="mb-3">
-                  <span class={`text-[0.55rem] font-label tracking-[0.25em] uppercase block mb-2 ${
+                <div class="mb-4">
+                  <span class={`text-[0.5rem] font-label tracking-[0.25em] uppercase block mb-2 ${
                     tier === "standard" ? "text-ink-500" :
                     tier === "premium" ? "text-gold-400/60" :
                     "text-gold-300/60"
                   }`}>{tier}</span>
-                  <div class="flex flex-wrap gap-2">
+                  <div class="flex flex-wrap gap-1.5">
                     {finishesByTier(tier).map((f) => {
                       const slug = finishSlug(f.name);
                       const hasPhoto = slug in speakerFinishMap;
                       const photoFile = hasPhoto ? speakerFinishMap[slug] : "";
                       return (
                         <button
-                          class={`finish-swatch group/swatch relative overflow-hidden rounded-sm transition-all duration-300 ${
-                            tier === "exotic" ? "ring-1 ring-gold-500/20" :
-                            tier === "premium" ? "ring-1 ring-gold-500/10" :
-                            "ring-1 ring-[#2a2520]"
-                          }`}
+                          class="finish-btn group/fb"
                           data-finish={slug}
                           data-name={f.name}
                           data-tier={tier}
                           data-photo={hasPhoto ? `/images/products/${product.slug}/${photoFile}` : ""}
-                          title={`${f.name}${hasPhoto ? "" : " (swatch only)"}`}
+                          title={f.name}
                           aria-label={`Select ${f.name} finish`}
                         >
-                          <img
-                            src={swatchPath(f.name)}
-                            alt={f.name}
-                            class="w-11 h-11 object-cover block transition-transform duration-300 group-hover/swatch:scale-110"
-                            loading="lazy"
-                          />
-                          {/* Subtle overlay for non-available-photo finishes */}
-                          {!hasPhoto && (
-                            <div class="absolute inset-0 bg-[rgba(8,8,8,0.25)] pointer-events-none"></div>
+                          <span class={`finish-dot finish-dot-${slug}`}></span>
+                          <span class="finish-label">{f.name}</span>
+                          {hasPhoto && (
+                            <svg class="finish-camera" viewBox="0 0 16 16" fill="currentColor">
+                              <path d="M10 3H6L5 5H2a1 1 0 00-1 1v6a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1h-3l-1-2zM8 11a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/>
+                            </svg>
                           )}
                         </button>
                       );
@@ -378,25 +369,82 @@ const related = products.filter((p) => p.slug !== product.slug).sort((a, b) => a
     border-color: rgba(201, 166, 74, 0.5) !important;
   }
 
-  /* ── Finish swatches ─────────────────────────────────────────── */
-  .finish-swatch {
+  /* ── Finish buttons ──────────────────────────────────────────── */
+  .finish-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px 5px 8px;
+    border: 1px solid #2a2520;
+    border-radius: 3px;
+    background: transparent;
     cursor: pointer;
-    opacity: 0.75;
-    transition: opacity 0.3s ease, ring-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.25s ease;
   }
 
-  .finish-swatch:hover {
-    opacity: 1;
-    transform: scale(1.08);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  .finish-btn:hover {
+    border-color: rgba(201, 166, 74, 0.35);
+    background: rgba(201, 166, 74, 0.04);
   }
 
-  .finish-swatch.swatch-active {
-    opacity: 1;
-    ring-color: rgba(201, 166, 74, 0.7);
-    box-shadow: 0 0 0 2px rgba(201, 166, 74, 0.6), 0 4px 16px rgba(0, 0, 0, 0.4);
-    transform: scale(1.05);
+  .finish-btn.finish-active {
+    border-color: rgba(201, 166, 74, 0.6);
+    background: rgba(201, 166, 74, 0.08);
+    box-shadow: 0 0 0 1px rgba(201, 166, 74, 0.2);
   }
+
+  .finish-label {
+    font-family: var(--font-label, "Montserrat", sans-serif);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #a8a09a;
+    transition: color 0.25s ease;
+    white-space: nowrap;
+  }
+
+  .finish-btn:hover .finish-label,
+  .finish-btn.finish-active .finish-label {
+    color: #e8e0d8;
+  }
+
+  .finish-dot {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .finish-camera {
+    width: 10px;
+    height: 10px;
+    color: rgba(201, 166, 74, 0.4);
+    flex-shrink: 0;
+    transition: color 0.25s ease;
+  }
+
+  .finish-btn:hover .finish-camera,
+  .finish-btn.finish-active .finish-camera {
+    color: rgba(201, 166, 74, 0.7);
+  }
+
+  /* ── Finish color dots ─────────────────────────────────────── */
+  .finish-dot-black-oak        { background: #3a3228; }
+  .finish-dot-medium-oak       { background: #b08040; }
+  .finish-dot-walnut            { background: #6b4226; }
+  .finish-dot-natural-cherry    { background: #c87c4a; }
+  .finish-dot-white-satin       { background: #e8e0d8; border-color: rgba(0,0,0,0.15); }
+  .finish-dot-black-pearl       { background: #1a1a1a; border-color: rgba(255,255,255,0.15); }
+  .finish-dot-rosewood          { background: #5c2018; }
+  .finish-dot-curly-maple       { background: #d4b87a; }
+  .finish-dot-natural-sapele-pommele { background: #a05c30; }
+  .finish-dot-birdseye-maple    { background: #dcc89c; }
+  .finish-dot-olive-ash-burl    { background: #8a7a50; }
+  .finish-dot-cabernet-sapele-pommele { background: #7a1e1e; }
+  .finish-dot-exotic-copper     { background: #c07a3a; }
 </style>
 
 <script>
@@ -441,38 +489,23 @@ const related = products.filter((p) => p.slug !== product.slug).sort((a, b) => a
         setMainImage(src);
         clearActiveThumb();
         thumb.classList.add("active-thumb");
-        // Also clear active swatch since user picked a gallery image
-        document.querySelectorAll(".finish-swatch").forEach((s) => s.classList.remove("swatch-active"));
-        const nameEl = document.getElementById("active-finish-name");
-        if (nameEl) nameEl.innerHTML = "&nbsp;";
+        // Also clear active finish button since user picked a gallery image
+        document.querySelectorAll(".finish-btn").forEach((b) => b.classList.remove("finish-active"));
       }
     });
   });
 
-  // ─── Finish swatch clicking ────────────────────────────────────
-  const swatches = document.querySelectorAll(".finish-swatch");
-  const finishNameDisplay = document.getElementById("active-finish-name");
+  // ─── Finish button clicking ────────────────────────────────────
+  const finishBtns = document.querySelectorAll(".finish-btn");
 
-  swatches.forEach((swatch) => {
-    swatch.addEventListener("click", () => {
-      const el = swatch as HTMLElement;
-      const name = el.dataset.name || "";
+  finishBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const el = btn as HTMLElement;
       const photo = el.dataset.photo || "";
-      const tier = el.dataset.tier || "";
 
-      // Highlight active swatch
-      swatches.forEach((s) => s.classList.remove("swatch-active"));
-      swatch.classList.add("swatch-active");
-
-      // Show finish name with tier label
-      if (finishNameDisplay) {
-        const tierLabel = tier.charAt(0).toUpperCase() + tier.slice(1);
-        if (photo) {
-          finishNameDisplay.innerHTML = `<span class="text-ink-100">${name}</span> <span class="text-ink-500 text-xs">· ${tierLabel}</span>`;
-        } else {
-          finishNameDisplay.innerHTML = `<span class="text-ink-100">${name}</span> <span class="text-ink-500 text-xs">· ${tierLabel} · Photo not available</span>`;
-        }
-      }
+      // Highlight active button
+      finishBtns.forEach((b) => b.classList.remove("finish-active"));
+      btn.classList.add("finish-active");
 
       // Swap main image if this finish has a dedicated photo
       if (photo) {
