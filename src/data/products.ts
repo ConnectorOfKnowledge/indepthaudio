@@ -349,3 +349,56 @@ export const SHIPPING_NOTE = "Free shipping — Continental US";
 export const CUSTOM_ORDER_LEAD = "Custom orders: 8–12 week lead time";
 export const PHONE_NUMBER = "(480) 550-0097";
 export const PHONE_HREF = "tel:+14805500097";
+
+/* ─── FINISH SWATCH / PHOTO MAPPING ───────────────────────────── */
+
+/** Convert finish name → slug (e.g. "Black Oak" → "black-oak") */
+export function finishSlug(name: string): string {
+  return name.toLowerCase().replace(/\s+/g, "-");
+}
+
+/** Swatch thumbnail path for a given finish name */
+export function swatchPath(name: string): string {
+  return `/images/swatches/${finishSlug(name)}.jpg`;
+}
+
+/**
+ * Maps speaker slug → { finishSlug → image filename }
+ * Only includes finishes where we have a dedicated product photo.
+ * When a finish IS in this map, clicking its swatch swaps the main image.
+ * When a finish is NOT here, the swatch is still shown but no image swap occurs.
+ */
+export const FINISH_PHOTO_MAP: Record<string, Record<string, string>> = {
+  aeris: {
+    "rosewood": "aeris-rosewood-front.jpg",
+    "black-pearl": "aeris-black-pearl.jpg",
+    "black-oak": "aeris-black-oak.jpg",
+    "exotic-copper": "aeris-exotic-copper.jpg",
+    "natural-sapele-pommele": "aeris-natural-sapele.jpg",
+    "cabernet-sapele-pommele": "aeris-cabernet-black-pearl.jpg",
+  },
+  "studio-hd": {
+    "black-pearl": "studio-hd-black-pearl.jpg",
+    "birdseye-maple": "studio-hd-birdseye-maple.jpg",
+    "natural-cherry": "studio-hd-natural-cherry.jpg",
+    "rosewood": "studio-hd-rosewood-no-grille.jpg",
+  },
+  "signature-se": {
+    "rosewood": "signature-se-rosewood.jpg",
+    "curly-maple": "signature-se-curly-maple.jpg",
+    "white-satin": "signature-se-white-satin.jpg",
+    "medium-oak": "signature-se-medium-oak.jpg",
+    "cabernet-sapele-pommele": "signature-se-cabernet.jpg",
+    "natural-sapele-pommele": "signature-se-sapele-pommele.jpg",
+  },
+  "focus-xd": {
+    "black-pearl": "focus-xd-black-pearl.jpg",
+    "rosewood": "focus-xd-rosewood.jpg",
+    "olive-ash-burl": "focus-xd-olive-ash-burl.jpg",
+    "cabernet-sapele-pommele": "focus-xd-cabernet.jpg",
+    "natural-sapele-pommele": "focus-xd-sapele.jpg",
+  },
+  calibre: {
+    "rosewood": "calibre-rosewood.jpg",
+  },
+};

@@ -9,6 +9,9 @@ import {
   getProductBySlug,
   formatPrice,
   formatPriceRange,
+  finishSlug,
+  swatchPath,
+  FINISH_PHOTO_MAP,
   SHIPPING_NOTE,
   CUSTOM_ORDER_LEAD,
   PHONE_NUMBER,
@@ -34,6 +37,9 @@ const heroSrc = `/images/products/${product.slug}/${product.heroImage}`;
 function finishesByTier(tier: FinishOption["tier"]) {
   return product.finishes.filter((f) => f.tier === tier);
 }
+
+// Finish photo map for this specific speaker
+const speakerFinishMap = FINISH_PHOTO_MAP[product.slug] || {};
 
 // Build "related" products (everything except current)
 const related = products.filter((p) => p.slug !== product.slug).sort((a, b) => a.order - b.order).slice(0, 3);
@@ -99,7 +105,7 @@ const related = products.filter((p) => p.slug !== product.slug).sort((a, b) => a
               id="main-image"
               src={heroSrc}
               alt={product.name}
-              class="w-full aspect-[3/4] object-cover object-center block"
+              class="w-full aspect-[3/4] object-cover object-center block transition-opacity duration-200"
             />
             <!-- Badges -->
             <div class="absolute top-4 left-4 flex flex-col gap-2">
@@ -169,49 +175,57 @@ const related = products.filter((p) => p.slug !== product.slug).sort((a, b) => a
             </p>
           </div>
 
-          <!-- Finish tiers -->
-          <div class="mb-8">
-            <p class="text-[0.65rem] font-label font-semibold tracking-[0.2em] uppercase text-ink-300 mb-4">
+          <!-- Finish swatches -->
+          <div class="mb-8" id="finish-selector" data-speaker={product.slug}>
+            <p class="text-[0.65rem] font-label font-semibold tracking-[0.2em] uppercase text-ink-300 mb-1">
               Available Finishes
             </p>
-            <div class="space-y-3">
-              {finishesByTier("standard").length > 0 && (
-                <div>
-                  <span class="text-[0.55rem] font-label tracking-[0.25em] uppercase text-ink-500 block mb-1">Standard</span>
+            <p id="active-finish-name" class="text-ink-200 text-sm mb-4 h-5">&nbsp;</p>
+
+            {(["standard", "premium", "exotic"] as const).map((tier) => (
+              finishesByTier(tier).length > 0 && (
+                <div class="mb-3">
+                  <span class={`text-[0.55rem] font-label tracking-[0.25em] uppercase block mb-2 ${
+                    tier === "standard" ? "text-ink-500" :
+                    tier === "premium" ? "text-gold-400/60" :
+                    "text-gold-300/60"
+                  }`}>{tier}</span>
                   <div class="flex flex-wrap gap-2">
-                    {finishesByTier("standard").map((f) => (
-                      <span class="px-3 py-1 text-[0.6rem] font-label tracking-wider text-ink-300 border border-[#2a2520] bg-[#0c0c0c]">
-                        {f.name}
-                      </span>
-                    ))}
+                    {finishesByTier(tier).map((f) => {
+                      const slug = finishSlug(f.name);
+                      const hasPhoto = slug in speakerFinishMap;
+                      const photoFile = hasPhoto ? speakerFinishMap[slug] : "";
+                      return (
+                        <button
+                          class={`finish-swatch group/swatch relative overflow-hidden rounded-sm transition-all duration-300 ${
+                            tier === "exotic" ? "ring-1 ring-gold-500/20" :
+                            tier === "premium" ? "ring-1 ring-gold-500/10" :
+                            "ring-1 ring-[#2a2520]"
+                          }`}
+                          data-finish={slug}
+                          data-name={f.name}
+                          data-tier={tier}
+                          data-photo={hasPhoto ? `/images/products/${product.slug}/${photoFile}` : ""}
+                          title={`${f.name}${hasPhoto ? "" : " (swatch only)"}`}
+                          aria-label={`Select ${f.name} finish`}
+                        >
+                          <img
+                            src={swatchPath(f.name)}
+                            alt={f.name}
+                            class="w-11 h-11 object-cover block transition-transform duration-300 group-hover/swatch:scale-110"
+                            loading="lazy"
+                          />
+                          {/* Subtle overlay for non-available-photo finishes */}
+                          {!hasPhoto && (
+                            <div class="absolute inset-0 bg-[rgba(8,8,8,0.25)] pointer-events-none"></div>
+                          )}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
-              )}
-              {finishesByTier("premium").length > 0 && (
-                <div>
-                  <span class="text-[0.55rem] font-label tracking-[0.25em] uppercase text-ink-500 block mb-1">Premium</span>
-                  <div class="flex flex-wrap gap-2">
-                    {finishesByTier("premium").map((f) => (
-                      <span class="px-3 py-1 text-[0.6rem] font-label tracking-wider text-gold-400/80 border border-gold-500/20 bg-[#0c0c0c]">
-                        {f.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {finishesByTier("exotic").length > 0 && (
-                <div>
-                  <span class="text-[0.55rem] font-label tracking-[0.25em] uppercase text-ink-500 block mb-1">Exotic</span>
-                  <div class="flex flex-wrap gap-2">
-                    {finishesByTier("exotic").map((f) => (
-                      <span class="px-3 py-1 text-[0.6rem] font-label tracking-wider text-gold-300 border border-gold-500/30 bg-[rgba(201,166,74,0.04)]">
-                        {f.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+              )
+            ))}
           </div>
 
           <!-- CTA Buttons -->
@@ -363,6 +377,26 @@ const related = products.filter((p) => p.slug !== product.slug).sort((a, b) => a
   .active-thumb {
     border-color: rgba(201, 166, 74, 0.5) !important;
   }
+
+  /* ── Finish swatches ─────────────────────────────────────────── */
+  .finish-swatch {
+    cursor: pointer;
+    opacity: 0.75;
+    transition: opacity 0.3s ease, ring-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .finish-swatch:hover {
+    opacity: 1;
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+
+  .finish-swatch.swatch-active {
+    opacity: 1;
+    ring-color: rgba(201, 166, 74, 0.7);
+    box-shadow: 0 0 0 2px rgba(201, 166, 74, 0.6), 0 4px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.05);
+  }
 </style>
 
 <script>
@@ -383,14 +417,68 @@ const related = products.filter((p) => p.slug !== product.slug).sort((a, b) => a
   const mainImage = document.getElementById("main-image") as HTMLImageElement | null;
   const thumbs = document.querySelectorAll(".gallery-thumb");
 
+  function setMainImage(src: string) {
+    if (mainImage && src) {
+      // Smooth crossfade
+      mainImage.style.opacity = "0";
+      setTimeout(() => {
+        mainImage.src = src;
+        mainImage.onload = () => {
+          mainImage.style.opacity = "1";
+        };
+      }, 150);
+    }
+  }
+
+  function clearActiveThumb() {
+    thumbs.forEach((t) => t.classList.remove("active-thumb"));
+  }
+
   thumbs.forEach((thumb) => {
     thumb.addEventListener("click", () => {
       const src = (thumb as HTMLElement).dataset.src;
-      if (mainImage && src) {
-        mainImage.src = src;
-        // Update active state
-        thumbs.forEach((t) => t.classList.remove("active-thumb"));
+      if (src) {
+        setMainImage(src);
+        clearActiveThumb();
         thumb.classList.add("active-thumb");
+        // Also clear active swatch since user picked a gallery image
+        document.querySelectorAll(".finish-swatch").forEach((s) => s.classList.remove("swatch-active"));
+        const nameEl = document.getElementById("active-finish-name");
+        if (nameEl) nameEl.innerHTML = "&nbsp;";
+      }
+    });
+  });
+
+  // ─── Finish swatch clicking ────────────────────────────────────
+  const swatches = document.querySelectorAll(".finish-swatch");
+  const finishNameDisplay = document.getElementById("active-finish-name");
+
+  swatches.forEach((swatch) => {
+    swatch.addEventListener("click", () => {
+      const el = swatch as HTMLElement;
+      const name = el.dataset.name || "";
+      const photo = el.dataset.photo || "";
+      const tier = el.dataset.tier || "";
+
+      // Highlight active swatch
+      swatches.forEach((s) => s.classList.remove("swatch-active"));
+      swatch.classList.add("swatch-active");
+
+      // Show finish name with tier label
+      if (finishNameDisplay) {
+        const tierLabel = tier.charAt(0).toUpperCase() + tier.slice(1);
+        if (photo) {
+          finishNameDisplay.innerHTML = `<span class="text-ink-100">${name}</span> <span class="text-ink-500 text-xs">· ${tierLabel}</span>`;
+        } else {
+          finishNameDisplay.innerHTML = `<span class="text-ink-100">${name}</span> <span class="text-ink-500 text-xs">· ${tierLabel} · Photo not available</span>`;
+        }
+      }
+
+      // Swap main image if this finish has a dedicated photo
+      if (photo) {
+        setMainImage(photo);
+        // Also clear gallery thumb highlights
+        clearActiveThumb();
       }
     });
   });
